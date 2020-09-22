@@ -145,6 +145,9 @@ body {
     inset 2px 2px 4px rgba(255, 255, 255, 0.1),
     inset 2px 2px 8px rgba(0, 0, 0, 0.15);
 }
+.buttons button:focus {
+  color: #ff3869;
+}
 /* add new item */
 .add-item {
   background-color: #f0f0f3;

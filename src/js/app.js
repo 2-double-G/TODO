@@ -18,11 +18,12 @@ const ADD = document.querySelector(".fa-plus"),
       INPUT = document.querySelector(".input");
 
 let id = 0, // List item id
-  toDoList = []; // List of items
+    toDoList = []; // List of items
 
 // Show number of left items
 showItemsLeft(toDoList);
 
+// Add new item by clicking on "plus" button
 ADD.addEventListener("click", addItem);
 
 // Add new item by pressing on "enter"
@@ -157,7 +158,7 @@ function showFiltred(event) {
 
     noCompleted.forEach((item) => item.classList.add(HIDE));
     noActive.forEach((item) => item.classList.remove(HIDE));
-    
+
   }
 }
 
