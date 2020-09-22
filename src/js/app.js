@@ -117,3 +117,10 @@ function showItemsLeft(arr) {
 }
 
 showItemsLeft(toDoList);
+
+//------------------------------------------------------------
+// Here will be function for array filter "all", "active" and "completed"
+
+//------------------------------------------------------------
+// Here will be local storage
+
