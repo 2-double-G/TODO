@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,200;0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/8a5b4365d1.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>todo</h1>
+            <p>It's <span class="date"></span></p>
+        </div>
+        <div class="body">
+            <ul id="list">    
+                 <li class="item">
+                     <i class="fa fa-circle-thin co" job="complete" id="0"></i>
+                     <p class="text">Drink Coffee</p>
+                     <i class="fa fa-trash-o del" job="delete" id="0"></i> 
+                 </li>
+                 <li class="item">
+                    <i class="fa fa-circle-thin co" job="complete" id="0"></i>
+                    <p class="text">Drink Coffee</p>
+                    <i class="fa fa-trash-o del" job="delete" id="0"></i> 
+                </li>
+             </ul>
+        </div>
+        <div class="item-left">
+
+        </div>
+        <div class="add-item">
+            <i class="fas fa-plus"></i>
+            <input type="text" placeholder="What needs to be done?">
+        </div>
+    </div>
+    <script src="./src/js/app.js"></script>
+</body>
+</html>
