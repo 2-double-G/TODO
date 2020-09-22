@@ -15,12 +15,12 @@ DATE.innerHTML = TODAY.toLocaleDateString("en-US", OPTIONS);
 
 // Add new item using plus button
 const ADD = document.querySelector(".fa-plus"),
-      INPUT = document.querySelector(".input");
+      INPUT = document.querySelector(".input")
 
 let id = 0, // List item id
     toDoList = []; // List of items
 
-document.addEventListener("click", addItem);
+ADD.addEventListener("click", addItem);
 
 // Add new item by pressing on "enter"
 document.addEventListener("keyup", function (event) {
@@ -28,17 +28,22 @@ document.addEventListener("keyup", function (event) {
 })
 
 //------------------------------------------------------------
+const CHECK = "fa-check-circle",
+      UNCHECK = "fa-circle",
+      DEL = "line-through";
+
 // Add new item in HTML
 function insertItem (id, item, done, dlt) {
     // If item was deleted then exit
     if (dlt) return;
-
-    const POSITION = "beforeend";    
-
+    
+    const POSITION = "beforeend",
+          LINE = done ? DEL : "",
+          DONE = done ? CHECK : UNCHECK;
 
     let listItem = `<li class="item">
-                        <i class="fa fa-circle-thin co" job="complete" id="${id}"></i>
-                        <p class="text">${item}</p>
+                        <i class="far ${DONE} co" job="complete" id="${id}"></i>
+                        <p class="text ${LINE}">${item}</p>
                         <i class="fas fa-times del" job="delete" id="${id}"></i>
                     </li>
                     `;
@@ -70,3 +75,17 @@ function addItem () {
 }
 
 //------------------------------------------------------------
+// When press on complete icon
+const LI = document.getElementById("list");
+
+LI.addEventListener("click", function(event) {
+    const ITEM = event.target;
+    // Make item complete
+    toDoList[ITEM.id].done = toDoList[ITEM.id].done ? false : true;
+    // Swap fa-circle and fa-check-circle
+    ITEM.classList.toggle(UNCHECK);
+    ITEM.classList.toggle(CHECK);
+    // Crosses out the completed element
+    ITEM.parentNode.querySelector(".text").classList.toggle(DEL);
+    
+})

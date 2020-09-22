@@ -106,7 +106,7 @@ body{
 .fa-check-circle{
     color:#49ec85;
 }
-.lineThrough{
+.line-through{
     text-decoration: line-through;
     color : #ccc;
 }
