@@ -71,6 +71,8 @@ function addItem() {
   id++;
   // Clear input
   INPUT.value = "";
+  // Counts the number of left items (for place of code where toDoList is updated)
+  showItemsLeft(toDoList);
 }
 
 //------------------------------------------------------------
@@ -81,9 +83,9 @@ LI.addEventListener("click", completeOrDelete);
 
 function completeOrDelete(event) {
   const ITEM = event.target;
+  // console.log(this);
   // Make item complete
   if (ITEM.classList.contains("complete")) {
-
     toDoList[ITEM.id].done = toDoList[ITEM.id].done ? false : true;
     // Swap fa-circle and fa-check-circle
     ITEM.classList.toggle(UNCHECK);
@@ -91,9 +93,27 @@ function completeOrDelete(event) {
     // Crosses out the completed element
     ITEM.parentNode.querySelector(".text").classList.toggle(DEL);
   } else if (ITEM.classList.contains("delete")) {
-
-    toDoList[ITEM.id].dlt = toDoList[ITEM.id].dlt ? true : false;
+    toDoList[ITEM.id].dlt = true;
     // Remove item from DOM
     ITEM.parentNode.parentNode.removeChild(ITEM.parentNode);
   }
+  // Counts the number of left items (for place of code where toDoList is updated)
+  showItemsLeft(toDoList);
 }
+
+//------------------------------------------------------------
+// Counts the number of left items
+
+function showItemsLeft(arr) {
+  let current = arr.filter(
+    (item) => (item.done === false) & (item.dlt === false)
+  ).length;
+
+  if (current <= 1) {
+    document.getElementById("item-left").innerHTML = `${current} item`;
+  } else {
+    document.getElementById("item-left").innerHTML = `${current} items`;
+  }
+}
+
+showItemsLeft(toDoList);
