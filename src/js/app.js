@@ -42,5 +42,6 @@ document.addEventListener("click", function() {
 })
 
 function addItem () {
-    
+    const ITEM = input.nodeValue;
+    console.log(ITEM);
 }
