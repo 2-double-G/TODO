@@ -14,15 +14,16 @@ DATE.innerHTML = TODAY.toLocaleDateString("en-US", OPTIONS);
 
 //------------------------------------------------------------
 // Add new item in HTML
-function insertItem (id, item, done, del) {
-    // If item was deleted then skip
-    if (del) return;
+function insertItem (id, item, done, dlt) {
+    // If item was deleted then exit
+    if (dlt) return;
 
-    const POSITION = "beforeend";
-    
+    const POSITION = "beforeend";    
+
+
     let listItem = `<li class="item">
-             <i class="far ${DONE} co" job="complete" id="${id}"></i>
-             <p class="text ${LINE}">${item}</p>
+             <i class="fa fa-circle-thin co" job="complete" id="${id}"></i>
+             <p class="text">${item}</p>
              <i class="fas fa-times del" job="delete" id="${id}"></i>
            </li>
            `;
@@ -33,15 +34,31 @@ function insertItem (id, item, done, del) {
 //------------------------------------------------------------
 // Add new item using plus button
 
-const ADD = document.querySelector(".fa-plus");
+const ADD = document.querySelector(".fa-plus"),
+      INPUT = document.querySelector(".input");
 
-let id = 0;
+let id = 0, // List item id
+    toDoList = []; // List of items
 
-document.addEventListener("click", function() {
-    console.log(1);
-})
+document.addEventListener("click", addItem);
 
 function addItem () {
-    const ITEM = input.nodeValue;
-    console.log(ITEM);
+    const ITEM = INPUT.value;
+
+    // If there an empty input then exit
+    if (!ITEM) return;
+
+    // Add new item to array
+    toDoList.push({
+        id: id,
+        item: ITEM,
+        done: false,
+        dlt: false // It's delete
+    });
+    // Insert in HTML to display
+    insertItem(id, ITEM, false, false);
+    
+    id++;
+    // Clear input
+    INPUT.value = ""
 }
