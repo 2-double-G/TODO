@@ -133,7 +133,7 @@ SHOW_BUTTON.addEventListener("click", showFiltred);
 function showFiltred(event) {
   const BUTTON = event.target,
         ITEMS = document.querySelectorAll(".item"),
-        HIDE = document.querySelectorAll(".hide");
+        HIDE = "hide"
 
   // Get completed items (or no not active)
   const noActive = Array.from(ITEMS).filter(
