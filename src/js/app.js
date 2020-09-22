@@ -109,7 +109,7 @@ function showItemsLeft(arr) {
     (item) => (item.done === false) & (item.dlt === false)
   ).length;
 
-  if (current <= 1) {
+  if (current == 1) {
     document.getElementById("item-left").innerHTML = `${current} item`;
   } else {
     document.getElementById("item-left").innerHTML = `${current} items`;
@@ -123,4 +123,3 @@ showItemsLeft(toDoList);
 
 //------------------------------------------------------------
 // Here will be local storage
-
