@@ -11,6 +11,21 @@ DATE.innerHTML = TODAY.toLocaleDateString("en-US", OPTIONS);
 // Here will be drag&drop
 
 
+//------------------------------------------------------------
+
+// Add new item using plus button
+const ADD = document.querySelector(".fa-plus"),
+      INPUT = document.querySelector(".input");
+
+let id = 0, // List item id
+    toDoList = []; // List of items
+
+document.addEventListener("click", addItem);
+
+// Add new item by pressing on "enter"
+document.addEventListener("keyup", function (event) {
+    if (event.keyCode == 13) addItem ();
+})
 
 //------------------------------------------------------------
 // Add new item in HTML
@@ -22,26 +37,17 @@ function insertItem (id, item, done, dlt) {
 
 
     let listItem = `<li class="item">
-             <i class="fa fa-circle-thin co" job="complete" id="${id}"></i>
-             <p class="text">${item}</p>
-             <i class="fas fa-times del" job="delete" id="${id}"></i>
-           </li>
-           `;
+                        <i class="fa fa-circle-thin co" job="complete" id="${id}"></i>
+                        <p class="text">${item}</p>
+                        <i class="fas fa-times del" job="delete" id="${id}"></i>
+                    </li>
+                    `;
 
     list.insertAdjacentHTML(POSITION, listItem);
 }
 
 //------------------------------------------------------------
-// Add new item using plus button
-
-const ADD = document.querySelector(".fa-plus"),
-      INPUT = document.querySelector(".input");
-
-let id = 0, // List item id
-    toDoList = []; // List of items
-
-document.addEventListener("click", addItem);
-
+// Add new item to the list
 function addItem () {
     const ITEM = INPUT.value;
 
@@ -62,3 +68,5 @@ function addItem () {
     // Clear input
     INPUT.value = ""
 }
+
+//------------------------------------------------------------
