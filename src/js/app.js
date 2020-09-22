@@ -1,9 +1,10 @@
 "use strict";
 
+//------------------------------------------------------------
 // Show todays date
 const DATE = document.querySelector(".date"),
-  OPTIONS = { weekday: "long", month: "short", day: "numeric" },
-  TODAY = new Date();
+      OPTIONS = { weekday: "long", month: "short", day: "numeric" },
+      TODAY = new Date();
 
 DATE.innerHTML = TODAY.toLocaleDateString("en-US", OPTIONS);
 
@@ -14,10 +15,13 @@ DATE.innerHTML = TODAY.toLocaleDateString("en-US", OPTIONS);
 
 // Add new item using plus button
 const ADD = document.querySelector(".fa-plus"),
-  INPUT = document.querySelector(".input");
+      INPUT = document.querySelector(".input");
 
 let id = 0, // List item id
   toDoList = []; // List of items
+
+// Show number of left items
+showItemsLeft(toDoList);
 
 ADD.addEventListener("click", addItem);
 
@@ -28,8 +32,8 @@ document.addEventListener("keyup", function (event) {
 
 //------------------------------------------------------------
 const CHECK = "fa-check-circle",
-  UNCHECK = "fa-circle",
-  DEL = "line-through";
+      UNCHECK = "fa-circle",
+      DEL = "line-through";
 
 // Add new item in HTML
 function insertItem(id, item, done, dlt) {
@@ -37,10 +41,10 @@ function insertItem(id, item, done, dlt) {
   if (dlt) return;
 
   const POSITION = "beforeend",
-    LINE = done ? DEL : "",
-    DONE = done ? CHECK : UNCHECK;
+        LINE = done ? DEL : "",
+        DONE = done ? CHECK : UNCHECK;
 
-  let listItem = `<li class="item">
+  let listItem = `<li class="item" id="${id}">
                         <i class="far ${DONE} complete" id="${id}"></i>
                         <p class="text ${LINE}">${item}</p>
                         <i class="fas fa-times delete" id="${id}"></i>
@@ -69,8 +73,10 @@ function addItem() {
   insertItem(id, ITEM, false, false);
 
   id++;
+
   // Clear input
   INPUT.value = "";
+
   // Counts the number of left items (for place of code where toDoList is updated)
   showItemsLeft(toDoList);
 }
@@ -84,16 +90,20 @@ LI.addEventListener("click", completeOrDelete);
 function completeOrDelete(event) {
   const ITEM = event.target;
   // console.log(this);
+
   // Make item complete
   if (ITEM.classList.contains("complete")) {
     toDoList[ITEM.id].done = toDoList[ITEM.id].done ? false : true;
+
     // Swap fa-circle and fa-check-circle
     ITEM.classList.toggle(UNCHECK);
     ITEM.classList.toggle(CHECK);
+
     // Crosses out the completed element
     ITEM.parentNode.querySelector(".text").classList.toggle(DEL);
   } else if (ITEM.classList.contains("delete")) {
     toDoList[ITEM.id].dlt = true;
+
     // Remove item from DOM
     ITEM.parentNode.parentNode.removeChild(ITEM.parentNode);
   }
@@ -102,24 +112,54 @@ function completeOrDelete(event) {
 }
 
 //------------------------------------------------------------
-// Counts the number of left items
-
+// Counts number of left items
 function showItemsLeft(arr) {
   let current = arr.filter(
     (item) => (item.done === false) & (item.dlt === false)
   ).length;
 
-  if (current == 1) {
-    document.getElementById("item-left").innerHTML = `${current} item`;
-  } else {
-    document.getElementById("item-left").innerHTML = `${current} items`;
-  }
+  let string = current == 1 ? " item" : " items";
+
+  document.getElementById("item-left").innerHTML = current + string;
 }
 
-showItemsLeft(toDoList);
-
 //------------------------------------------------------------
-// Here will be function for array filter "all", "active" and "completed"
+// Filter to display active or complete or all items
+const SHOW_BUTTON = document.querySelector(".buttons");
+
+SHOW_BUTTON.addEventListener("click", showFiltred);
+
+function showFiltred(event) {
+  const BUTTON = event.target,
+        ITEMS = document.querySelectorAll(".item"),
+        HIDE = document.querySelectorAll(".hide");
+
+  // Get completed items (or no not active)
+  const noActive = Array.from(ITEMS).filter(
+    (item) => !toDoList[item.id].done === false
+  );
+
+  // Get active items (or no not completed)
+  const noCompleted = Array.from(ITEMS).filter(
+    (item) => !toDoList[item.id].done === true
+  );
+
+  if (BUTTON.classList.contains("all")) {
+
+    ITEMS.forEach((item) => item.classList.remove(HIDE));
+
+  } else if (BUTTON.classList.contains("active")) {
+
+    noActive.forEach((item) => item.classList.add(HIDE));
+    noCompleted.forEach((item) => item.classList.remove(HIDE));
+
+  } else if (BUTTON.classList.contains("completed")) {
+
+    noCompleted.forEach((item) => item.classList.add(HIDE));
+    noActive.forEach((item) => item.classList.remove(HIDE));
+    
+  }
+}
 
 //------------------------------------------------------------
 // Here will be local storage

@@ -1,6 +1,7 @@
 body {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
   background-color: #f0f0f3;
   font-family: "Work Sans", sans-serif;
 }
@@ -137,7 +138,8 @@ body {
     -2px -2px 12px rgba(255, 255, 255, 0.5),
     inset 2px 2px 4px rgba(255, 255, 255, 0.1), 2px 2px 8px rgba(0, 0, 0, 0.15);
 }
-.buttons button:hover {
+.buttons button:hover,
+.plus-button:hover {
   box-shadow: inset -2px -2px 8px rgba(255, 255, 255, 1),
     inset -2px -2px 12px rgba(255, 255, 255, 0.5),
     inset 2px 2px 4px rgba(255, 255, 255, 0.1),
@@ -152,7 +154,7 @@ body {
 
   display: flex;
   justify-content: space-between;
-  align-content: center;
+  align-items: center;
 
   border-radius: 0 0 15px 15px;
 }
@@ -161,6 +163,17 @@ body {
   color: #49ec85;
   align-self: center;
   cursor: pointer;
+}
+.plus-button {
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border-radius: 100%;
+  box-shadow: -2px -2px 8px rgba(255, 255, 255, 1),
+    -2px -2px 12px rgba(255, 255, 255, 0.5),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.1), 2px 2px 8px rgba(0, 0, 0, 0.15);
 }
 .add-item input {
   background-color: transparent;
@@ -171,11 +184,15 @@ body {
   font-size: 20px;
   font-weight: 300;
 
-  width: 310px;
+  width: 280px;
   height: 35px;
+  padding: 0 10px;
 
   box-shadow: inset -5px -5px 5px 0 rgba(255, 255, 255, 0.7),
     inset 5px 5px 5px 0 rgba(174, 174, 192, 0.4);
+}
+.add-item input:focus {
+  outline: none;
 }
 .add-item input::-webkit-input-placeholder {
   color: #b9cfc1;
@@ -196,4 +213,8 @@ body {
   color: #b9cfc1;
   font-size: 20px;
   font-style: italic;
+}
+/* for folter function */
+.hide {
+  display: none;
 }
