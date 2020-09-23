@@ -9,9 +9,6 @@ const DATE = document.querySelector(".date"),
 DATE.innerHTML = TODAY.toLocaleDateString("en-US", OPTIONS);
 
 //------------------------------------------------------------
-// Here will be drag&drop
-
-//------------------------------------------------------------
 
 let id = 0, // List item id
     toDoList = []; // List of items
@@ -45,12 +42,12 @@ function insertItem(id, item, done, dlt) {
         LINE = done ? DEL : "",
         DONE = done ? CHECK : UNCHECK;
 
-  let listItem = `<li class="item" id="${id}">
-                        <i class="far ${DONE} complete" id="${id}"></i>
-                        <p class="text ${LINE}">${item}</p>
-                        <i class="fas fa-times delete" id="${id}"></i>
-                    </li>
-                    `;
+  let listItem = `<li class="item" draggable="true" id="${id}">
+                    <i class="far ${DONE} complete" id="${id}"></i>
+                    <p class="text ${LINE}">${item}</p>
+                    <i class="fas fa-times delete" id="${id}"></i>
+                  </li>
+                  `;
 
   list.insertAdjacentHTML(POSITION, listItem);
 }
@@ -136,7 +133,7 @@ SHOW_BUTTON.addEventListener("click", showFiltred);
 function showFiltred(event) {
   const BUTTON = event.target,
         ITEMS = document.querySelectorAll(".item"),
-        HIDE = "hide"
+        HIDE = "hide";
 
   // Get completed items (or no not active)
   const noActive = Array.from(ITEMS).filter(
@@ -149,19 +146,13 @@ function showFiltred(event) {
   );
 
   if (BUTTON.classList.contains("all")) {
-
     ITEMS.forEach((item) => item.classList.remove(HIDE));
-
   } else if (BUTTON.classList.contains("active")) {
-
     noActive.forEach((item) => item.classList.add(HIDE));
     noCompleted.forEach((item) => item.classList.remove(HIDE));
-
   } else if (BUTTON.classList.contains("completed")) {
-
     noCompleted.forEach((item) => item.classList.add(HIDE));
     noActive.forEach((item) => item.classList.remove(HIDE));
-
   }
 }
 
@@ -181,3 +172,99 @@ if (data) {
   toDoList = [];
   id = 0;
 }
+
+//------------------------------------------------------------
+// Drag & Drop
+
+const ITEMS = document.querySelectorAll(".item"),
+      DROPZONE = document.querySelector("ul");
+
+let selectedItemPos = 0,
+    selectedItem,
+    referenceElemen; // The node before which selectedItem is inserte
+
+// Drag & drop for selcted item
+ITEMS.forEach((item) => {
+  item.addEventListener("dragstart", dragStart);
+  item.addEventListener("dragover", dragOver);
+});
+
+// Drag & drop for list of items
+// When a dragged item is being dragged over a valid drop target
+DROPZONE.addEventListener("dragover", (event) => {
+  event.preventDefault();
+});
+// When an item is dropped on a valid drop target
+DROPZONE.addEventListener("drop", (event) => {
+  event.preventDefault();
+
+  DROPZONE.insertBefore(selectedItem, DROPZONE.children[selectedItemPos]);
+  selectedItem.classList.remove("hide-drop");
+
+  // Return the default margin
+  resetStyle();
+});
+
+// When the user starts dragging an item
+function dragStart() {
+  selectedItem = this;
+  // First, need to make pretty hide for the selected item
+  setTimeout(() => {
+    this.classList.add("hide-drop");
+  }, 0);
+  // Then remove it
+  setTimeout(() => {
+    DROPZONE.removeChild(this);
+  }, 400);
+}
+// When a dragged item is being dragged over a valid drop target
+function dragOver(event) {
+  event.preventDefault();
+  whereIsItem(event.clientY, this);
+}
+
+// The center of the item
+function centerItemPosition() {
+  const POSITION = this.getBoundingClientRect();
+  const Y_TOP = POSITION.top,
+        Y_BOTTOM = POSITION.bottom;
+  // Set property to the item
+  this["yPos"] = Y_TOP + (Y_BOTTOM - Y_TOP) / 2; // Distance to the center
+}
+
+function whereIsItem(currentYPos, node) {
+  centerItemPosition.call(node);
+  let itemAbove, itemBelow;
+  // Let identify the item that is directly above the selected item
+  for (let i = 0; i < ITEMS.length; i++) {
+    // Enumerate items
+    if (ITEMS[i]["yPos"] < currentYPos) {
+      itemAbove = node;
+      selectedItemPos = i+1;
+    } else {
+      if (!itemBelow) {
+        itemBelow = node;
+      }
+    }
+  }
+
+  // Return the default margin
+  resetStyle();
+
+  if (typeof(itemAbove) == "undefined") {
+    selectedItemPos = 0;
+  }
+  if (typeof(itemBelow) == "object") {
+    itemBelow.style.marginBottom = "1.5em"
+    itemBelow.style.transition = ".2s"
+  }
+}
+
+function resetStyle() {
+  ITEMS.forEach(item => {
+    item.style.marginBottom = "10px";
+    item.style.marginTop = "10px"
+  })
+}
+
+
