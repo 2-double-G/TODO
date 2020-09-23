@@ -13,12 +13,12 @@ DATE.innerHTML = TODAY.toLocaleDateString("en-US", OPTIONS);
 
 //------------------------------------------------------------
 
+let id = 0, // List item id
+    toDoList = []; // List of items
+
 // Add new item using plus button
 const ADD = document.querySelector(".fa-plus"),
       INPUT = document.querySelector(".input");
-
-let id = 0, // List item id
-    toDoList = []; // List of items
 
 // Show number of left items
 showItemsLeft(toDoList);
@@ -80,6 +80,8 @@ function addItem() {
 
   // Counts the number of left items (for place of code where toDoList is updated)
   showItemsLeft(toDoList);
+
+  localStorage.setItem("data", JSON.stringify(toDoList));
 }
 
 //------------------------------------------------------------
@@ -109,6 +111,7 @@ function completeOrDelete(event) {
     ITEM.parentNode.parentNode.removeChild(ITEM.parentNode);
   }
   // Counts the number of left items (for place of code where toDoList is updated)
+  localStorage.setItem("data", JSON.stringify(toDoList));
   showItemsLeft(toDoList);
 }
 
@@ -163,4 +166,18 @@ function showFiltred(event) {
 }
 
 //------------------------------------------------------------
-// Here will be local storage
+// Local storage
+let data = localStorage.getItem("data");
+
+// When page is reloaded
+if (data) {
+  toDoList = JSON.parse(data);
+  id = toDoList.length;
+
+  toDoList.forEach((item) => {
+    insertItem(item.id, item.item, item.done, item.dlt);
+  });
+} else {
+  toDoList = [];
+  id = 0;
+}
