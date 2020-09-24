@@ -172,4 +172,3 @@ if (data) {
   toDoList = [];
   id = 0;
 }
-

@@ -94,8 +94,7 @@ body {
 .delete {
   right: 15px;
 }
-.delete:hover,
-.clear:hover {
+.delete:hover {
   color: #ff3869;
 }
 .text {
@@ -141,8 +140,7 @@ body {
     inset 2px 2px 4px rgba(255, 255, 255, 0.1), 2px 2px 8px rgba(0, 0, 0, 0.15);
 }
 .buttons button:hover,
-.plus-button:hover,
-.clear:hover {
+.plus-button:hover {
   box-shadow: inset -2px -2px 8px rgba(255, 255, 255, 1),
     inset -2px -2px 12px rgba(255, 255, 255, 0.5),
     inset 2px 2px 4px rgba(255, 255, 255, 0.1),
@@ -151,11 +149,7 @@ body {
 .buttons button:focus {
   color: #ff3869;
 }
-/* clear */
-.clear {
-  color: #6e6d6d;
-  translate: transform 3s linear;
-}
+
 .fa-sync-alt {
   align-self: center;
 }
@@ -178,8 +172,7 @@ body {
   align-self: center;
   cursor: pointer;
 }
-.plus-button,
-.clear {
+.plus-button {
   height: 30px;
   width: 30px;
   display: flex;
