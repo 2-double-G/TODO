@@ -1,44 +1,25 @@
-//------------------------------------------------------------
 // Drag & Drop
-let items = document.querySelectorAll(".item"),
-    dropzone = document.querySelector("ul"),
+//------------------------------------------------------------
+let dropzone = document.getElementById("list"),
     referenceElement, // The node before which selectedItem is inserted
     selectedItem; // The node to be inserted
 
-// Drag & drop for selcted item
-items.forEach((item) => {
-  item.addEventListener("dragstart", dragStart);
-  item.addEventListener("dragover", dragOver);
-  item.addEventListener("dragend", dragEnd);
-  item.addEventListener("dragleave", dragLeave);
-});
+// When the user starts dragging an item
+dropzone.addEventListener("dragstart", dragStart);
 
-// Drag & drop for list of items
 // When a dragged item is being dragged over a valid drop target
-dropzone.addEventListener("dragover", (event) => {
-  event.preventDefault();
-  referenceElement = event.target;
-});
+dropzone.addEventListener("dragover", dragOver);
 
 // When an item is dropped on a valid drop target
-dropzone.addEventListener("drop", (event) => {
-  event.preventDefault();
+dropzone.addEventListener("drop", dragAndDrop);
 
-  if (!referenceElement.classList.contains("item")) {
-    dropzone.appendChild(selectedItem); // If the user wanna move item to the end of the list
-  } else {
-    dropzone.insertBefore(selectedItem, referenceElement);
-  }
+// When a dragged item leaves a valid drop target
+dropzone.addEventListener("dragleave", dragleave);
 
-  selectedItem.classList.remove("hide-drop");
-  resetStyle.call(referenceElement);
-});
+function dragStart(event) {
+  selectedItem = document.getElementById(event.target.id);
 
-// When the user starts dragging an item
-function dragStart() {
-  selectedItem = this;
-
-  // For pretty animation
+  // For pretty "hide" animation
   setTimeout(() => {
     selectedItem.classList.add("hide-drop");
   }, 0);
@@ -47,29 +28,21 @@ function dragStart() {
   }, 300);
 }
 
-// When a dragged item is being dragged over a valid drop target
-function dragOver() {
+function dragOver(event) {
   event.preventDefault();
 
-  // The center of the item
-  let yTop = this.getBoundingClientRect().top,
-      yBottom = this.getBoundingClientRect().bottom;
-  let center = yTop + (yBottom - yTop) / 2;
+  referenceElement = document.getElementById(event.target.id);
+  // Center of the current item
+  let center = centerOfTheItem(referenceElement);
 
-  // Shows free space
+  // Shows free space above the element
   if (event.clientY > center) {
-    showFreeSpace.call(this);
+    showFreeSpace.call(referenceElement);
   }
 }
 
-// When a drag operation ends
-function dragEnd() {
-  event.preventDefault();
-}
-
-// When a dragged item leaves a valid drop target
-function dragLeave() {
-  event.preventDefault();
+function dragleave() {
+  // Hides free space above the element
   resetStyle.call(referenceElement);
 }
 
@@ -78,6 +51,24 @@ function showFreeSpace() {
   this.style.transition = "0.3s";
 }
 
+function dragAndDrop() {
+  if (!referenceElement.classList.contains("item")) {
+    dropzone.appendChild(selectedItem); // If the user wanna move item to the end of the list
+  } else {
+    dropzone.insertBefore(selectedItem, referenceElement);
+  }
+
+  selectedItem.classList.remove("hide-drop");
+  resetStyle.call(referenceElement);
+}
+
 function resetStyle() {
-  referenceElement.style.marginTop = "10px";
+  this.style.marginTop = "10px";
+}
+
+function centerOfTheItem(item) {
+  let yTop = item.getBoundingClientRect().top;
+  let yBottom = item.getBoundingClientRect().bottom;
+
+  return (center = yTop + (yBottom - yTop) / 2);
 }

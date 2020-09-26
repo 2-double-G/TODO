@@ -50,6 +50,7 @@ function insertItem(id, item, done, dlt) {
                   `;
 
   list.insertAdjacentHTML(POSITION, listItem);
+  localStorage.setItem("data", JSON.stringify(toDoList));
 }
 
 //------------------------------------------------------------
