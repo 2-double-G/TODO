@@ -1,3 +1,5 @@
+"use strict";
+
 // Drag & Drop
 //------------------------------------------------------------
 let dropzone = document.getElementById("list"),
@@ -70,5 +72,5 @@ function centerOfTheItem(item) {
   let yTop = item.getBoundingClientRect().top;
   let yBottom = item.getBoundingClientRect().bottom;
 
-  return (center = yTop + (yBottom - yTop) / 2);
+  return (yTop + (yBottom - yTop) / 2);
 }

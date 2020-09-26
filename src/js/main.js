@@ -173,3 +173,12 @@ if (data) {
   toDoList = [];
   id = 0;
 }
+
+//------------------------------------------------------------
+// Clear button
+const CLEAR = document.querySelector(".clear");
+
+CLEAR.addEventListener("click", function () {
+  localStorage.clear();
+  location.reload();
+});

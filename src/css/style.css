@@ -18,7 +18,7 @@ body {
 .header {
   width: 100%;
   padding: 10px 0;
-  height: 150px;
+  height: 140px;
   background-color: #f0f0f3;
   border-bottom: 1px solid #c8c8ca;
   border-radius: 15px 15px 0 0;
@@ -57,7 +57,6 @@ body {
 .item {
   width: 380px;
   height: 45px;
-  min-height: 45px;
   position: relative;
   list-style: none;
   padding: 0;
@@ -94,7 +93,8 @@ body {
 .delete {
   right: 15px;
 }
-.delete:hover {
+.delete:hover,
+.clear:hover {
   color: #ff3869;
 }
 .text {
@@ -140,7 +140,8 @@ body {
     inset 2px 2px 4px rgba(255, 255, 255, 0.1), 2px 2px 8px rgba(0, 0, 0, 0.15);
 }
 .buttons button:hover,
-.plus-button:hover {
+.plus-button:hover,
+.clear:hover {
   box-shadow: inset -2px -2px 8px rgba(255, 255, 255, 1),
     inset -2px -2px 12px rgba(255, 255, 255, 0.5),
     inset 2px 2px 4px rgba(255, 255, 255, 0.1),
@@ -172,16 +173,20 @@ body {
   align-self: center;
   cursor: pointer;
 }
-.plus-button {
+.plus-button,
+.clear {
   height: 30px;
   width: 30px;
   display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
   border-radius: 100%;
   box-shadow: -2px -2px 8px rgba(255, 255, 255, 1),
     -2px -2px 12px rgba(255, 255, 255, 0.5),
     inset 2px 2px 4px rgba(255, 255, 255, 0.1), 2px 2px 8px rgba(0, 0, 0, 0.15);
+}
+.clear {
+  color: #969696;
 }
 .add-item input {
   background-color: transparent;
@@ -196,7 +201,7 @@ body {
   height: 35px;
   padding: 0 10px;
 
-  box-shadow: inset -5px -5px 5px 0 rgba(255, 255, 255, 0.7),
+  box-shadow: inset -5px -5px 3px 0 rgba(255, 255, 255, 0.7),
     inset 5px 5px 5px 0 rgba(174, 174, 192, 0.4);
 }
 .add-item input:focus {
@@ -231,10 +236,4 @@ body {
   width: 0;
   transition: width 0.2s linear;
   overflow: hidden;
-}
-.hoverd {
-  position: relative;
-}
-#droppable li {
-  color: #49ec85;
 }
