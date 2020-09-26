@@ -13,6 +13,7 @@ DATE.innerHTML = TODAY.toLocaleDateString("en-US", OPTIONS);
 let id = 0, // List item id
     toDoList = []; // List of items
 
+
 // Add new item using plus button
 const ADD = document.querySelector(".fa-plus"),
       INPUT = document.querySelector(".input");
@@ -182,3 +183,5 @@ CLEAR.addEventListener("click", function () {
   localStorage.clear();
   location.reload();
 });
+
+showItemsLeft(toDoList);
